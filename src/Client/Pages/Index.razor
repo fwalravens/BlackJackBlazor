@@ -1,0 +1,40 @@
+﻿@page "/"
+<h1>BlackJack</h1>
+<div class="mt-2">
+    @foreach (var card in Model.DealerHand.Cards)
+    {
+        <Card BlackJackCard="card" />
+    }
+</div>
+<div class="mt-2">
+    @foreach (var card in Model.PlayerHand.Cards)
+    {
+        <Card BlackJackCard=card />
+    }
+</div>
+<div class="mt-2">
+    <h3>@Model.GameSummary()</h3>
+    <p>Dealer Total: @Model.DealerHand.Value</p>
+    <p>Player Total: @Model.PlayerHand.Value</p>
+</div>
+<div class="mt-2">
+    @if (Model.GameState != GameState.GameOver)
+    {
+        <button class="btn btn-primary" @onclick="@Model.GivePlayerAnotherCard">Next Card</button>
+        <button class="btn btn-secondary" @onclick="@Model.PassToDealer">Pass</button>
+    }
+    else
+    {
+        <button class="btn btn-warning" @onclick="StartNewGame">New Game</button>
+    }
+</div>
+
+@code
+{
+    private BlackJack Model = new BlackJack();
+
+    private void StartNewGame()
+    {
+        Model = new BlackJack();
+    }
+}
